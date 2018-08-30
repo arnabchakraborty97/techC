@@ -6,8 +6,8 @@
 
 @section('content')
 	<h1>
-		Correct : {{ $correct }}<br>
-		Wrong : {{ $wrong }}<br>
-		Score : {{ $score }}
+		Correct : {{ Auth::user()->correct }}<br>
+		Wrong : {{ Auth::user()->wrong }}<br>
+		Score : {{ Auth::user()->score }}
 	</h1>
 @endsection

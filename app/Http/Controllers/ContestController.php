@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Question;
+use App\User;
+use Illuminate\Support\Facades\Auth;  
 
 class ContestController extends Controller
 {
@@ -15,6 +17,9 @@ class ContestController extends Controller
 	public function questions () {
 
 		$questions = Question::all();
+
+		if (Auth::user()->taken == 1)
+			return redirect()->back()->with('error', 'You have already taken the quiz');
 
 		return view('quiz.contest')->with('questions', $questions);
 
@@ -43,13 +48,26 @@ class ContestController extends Controller
 
 		}
 
+		$user = User::findOrFail(Auth::user()->id);
+		$user->correct = $correct;
+		$user->wrong = $wrong;
+		$user->score = $score;
+		$user->taken = 1;
+		$user->save();
+
 		$context = [
 			'correct' => $correct,
 			'wrong' => $wrong,
 			'score' => $score
 		];
 
-		return view('quiz.score')->with($context);
+		return redirect()->route('contest.results')->with('success', 'You successfully completed the quiz');
+
+	}
+
+	public function results() {
+
+		return view('quiz.score');
 
 	}
 

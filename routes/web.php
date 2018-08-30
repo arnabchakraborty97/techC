@@ -30,3 +30,4 @@ Route::resource('questions', 'QuestionController');
 // Contest
 Route::get('contest', 'ContestController@questions')->name('contest');
 Route::post('contest/check', 'ContestController@check')->name('contest.check');
+Route::get('/contest/results', 'ContestController@results')->name('contest.results');
