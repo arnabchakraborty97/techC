@@ -24,6 +24,18 @@
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
                         @else
+                            @can('view-users', Auth::user())
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('users.index') }}">Users</a>
+                                </li>
+                            @endcan
+
+                            @can('view-question', Auth::user())
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('questions.index') }}">Questions</a>
+                                </li>
+                            @endcan
+
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('contest') }}">Contest</a>
                             </li>

@@ -25,6 +25,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // Questions
+        Gate::define('view-question', 'App\Policies\QuestionPolicy@view');
+
+        // Users
+        Gate::define('view-users', 'App\Policies\UserPolicy@view');
     }
 }

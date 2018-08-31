@@ -11,23 +11,24 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index')->name('dashboard');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('dashboard');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 // Questions
-Route::resource('questions', 'QuestionController');
+Route::resource('questions', 'QuestionController')->middleware('can:view-question');
 
 
 // Contest
 Route::get('contest', 'ContestController@questions')->name('contest');
 Route::post('contest/check', 'ContestController@check')->name('contest.check');
 Route::get('/contest/results', 'ContestController@results')->name('contest.results');
+
+// Users
+Route::resource('users', 'UserController')->middleware('can:view-users');
